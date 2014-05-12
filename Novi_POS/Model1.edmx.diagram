@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2fbeee194aa149ce972bd6e68ee09e67" Name="Diagram1">
+        <EntityTypeShape EntityType="Database1Model.tblKategorija" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.tblKorisnici" Width="1.5" PointX="8.125" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.tblProizvod" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.tblTransakcija" Width="1.5" PointX="5.625" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.tblTransakcijaStavka" Width="2.125" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Database1Model.FK_tblProizvod_tblKategorija" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_tblTransakcijaStavka_tblKorisnici" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_tblTransakcijaStavka_tblProizvod" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_tblTransakcijaStavka_tblTransakcija" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
