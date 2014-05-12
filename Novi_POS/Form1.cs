@@ -56,6 +56,7 @@ namespace Novi_POS
                 }
             }
             // ako ovo vidis git je uspeo!!!
+            // treci commit
         }
     }
 }
