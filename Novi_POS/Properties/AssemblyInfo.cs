@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Novi_POS")]
+[assembly: AssemblyTitle("NewPOS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Novi_POS")]
+[assembly: AssemblyProduct("NewPOS")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e5eae58f-3ba2-479a-a7e1-c0b55eac16c0")]
+[assembly: Guid("c50ee169-6878-4cd0-846c-9fd2e098e042")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Novi_POS
+namespace NewPOS
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTransakcijaStavka
+    public partial class tblTransactionItem
     {
-        public int transakcijaStavkaId { get; set; }
-        public Nullable<int> transakcijaId { get; set; }
-        public Nullable<int> proizvodId { get; set; }
-        public Nullable<int> korisnikId { get; set; }
+        public int transactionItemId { get; set; }
+        public Nullable<int> transactionId { get; set; }
+        public Nullable<int> productId { get; set; }
+        public Nullable<int> userId { get; set; }
     
-        public virtual tblKorisnici tblKorisnici { get; set; }
-        public virtual tblProizvod tblProizvod { get; set; }
-        public virtual tblTransakcija tblTransakcija { get; set; }
+        public virtual tblProduct tblProduct { get; set; }
+        public virtual tblTransaction tblTransaction { get; set; }
+        public virtual tblUsers tblUsers { get; set; }
     }
 }

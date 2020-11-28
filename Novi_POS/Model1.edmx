@@ -5,116 +5,120 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="tblKategorija">
+        <EntityType Name="tblCategory">
           <Key>
-            <PropertyRef Name="kategorijaId" />
+            <PropertyRef Name="categoryId" />
           </Key>
-          <Property Name="kategorijaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="naziv" Type="nvarchar" MaxLength="50" />
+          <Property Name="categoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="categoryImage" Type="image" />
         </EntityType>
-        <EntityType Name="tblKorisnici">
+        <EntityType Name="tblProduct">
           <Key>
-            <PropertyRef Name="korisnikId" />
+            <PropertyRef Name="productId" />
           </Key>
-          <Property Name="korisnikId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="korisnickoIme" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="lozinka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="productId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productName" Type="nvarchar" MaxLength="50" />
+          <Property Name="productPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="productImage" Type="image" />
+          <Property Name="categoryId" Type="int" />
         </EntityType>
-        <EntityType Name="tblProizvod">
+        <EntityType Name="tblTransaction">
           <Key>
-            <PropertyRef Name="proizvodId" />
+            <PropertyRef Name="transactionId" />
           </Key>
-          <Property Name="proizvodId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="naziv" Type="nvarchar" MaxLength="50" />
-          <Property Name="cena" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="slika" Type="image" />
-          <Property Name="kategorijaId" Type="int" />
+          <Property Name="transactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="transactionDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="tblTransakcija">
+        <EntityType Name="tblTransactionItem">
           <Key>
-            <PropertyRef Name="transakcijaId" />
+            <PropertyRef Name="transactionItemId" />
           </Key>
-          <Property Name="transakcijaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="datumTransakcije" Type="datetime" />
+          <Property Name="transactionItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="transactionId" Type="int" />
+          <Property Name="productId" Type="int" />
+          <Property Name="userId" Type="int" />
         </EntityType>
-        <EntityType Name="tblTransakcijaStavka">
+        <EntityType Name="tblUsers">
           <Key>
-            <PropertyRef Name="transakcijaStavkaId" />
+            <PropertyRef Name="userId" />
           </Key>
-          <Property Name="transakcijaStavkaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="transakcijaId" Type="int" />
-          <Property Name="proizvodId" Type="int" />
-          <Property Name="korisnikId" Type="int" />
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_tblProizvod_tblKategorija">
-          <End Role="tblKategorija" Type="Self.tblKategorija" Multiplicity="0..1" />
-          <End Role="tblProizvod" Type="Self.tblProizvod" Multiplicity="*" />
+        <Association Name="FK_tblProduct_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblKategorija">
-              <PropertyRef Name="kategorijaId" />
+            <Principal Role="tblCategory">
+              <PropertyRef Name="categoryId" />
             </Principal>
-            <Dependent Role="tblProizvod">
-              <PropertyRef Name="kategorijaId" />
+            <Dependent Role="tblProduct">
+              <PropertyRef Name="categoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTransakcijaStavka_tblKorisnici">
-          <End Role="tblKorisnici" Type="Self.tblKorisnici" Multiplicity="0..1" />
-          <End Role="tblTransakcijaStavka" Type="Self.tblTransakcijaStavka" Multiplicity="*" />
+        <Association Name="FK_tblTransactionItem_tblProduct">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="0..1" />
+          <End Role="tblTransactionItem" Type="Self.tblTransactionItem" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblKorisnici">
-              <PropertyRef Name="korisnikId" />
+            <Principal Role="tblProduct">
+              <PropertyRef Name="productId" />
             </Principal>
-            <Dependent Role="tblTransakcijaStavka">
-              <PropertyRef Name="korisnikId" />
+            <Dependent Role="tblTransactionItem">
+              <PropertyRef Name="productId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTransakcijaStavka_tblProizvod">
-          <End Role="tblProizvod" Type="Self.tblProizvod" Multiplicity="0..1" />
-          <End Role="tblTransakcijaStavka" Type="Self.tblTransakcijaStavka" Multiplicity="*" />
+        <Association Name="FK_tblTransactionItem_tblTransaction">
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="0..1" />
+          <End Role="tblTransactionItem" Type="Self.tblTransactionItem" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblProizvod">
-              <PropertyRef Name="proizvodId" />
+            <Principal Role="tblTransaction">
+              <PropertyRef Name="transactionId" />
             </Principal>
-            <Dependent Role="tblTransakcijaStavka">
-              <PropertyRef Name="proizvodId" />
+            <Dependent Role="tblTransactionItem">
+              <PropertyRef Name="transactionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTransakcijaStavka_tblTransakcija">
-          <End Role="tblTransakcija" Type="Self.tblTransakcija" Multiplicity="0..1" />
-          <End Role="tblTransakcijaStavka" Type="Self.tblTransakcijaStavka" Multiplicity="*" />
+        <Association Name="FK_tblTransactionItem_tblUsers">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblTransactionItem" Type="Self.tblTransactionItem" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblTransakcija">
-              <PropertyRef Name="transakcijaId" />
+            <Principal Role="tblUsers">
+              <PropertyRef Name="userId" />
             </Principal>
-            <Dependent Role="tblTransakcijaStavka">
-              <PropertyRef Name="transakcijaId" />
+            <Dependent Role="tblTransactionItem">
+              <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Database1ModelStoreContainer">
-          <EntitySet Name="tblKategorija" EntityType="Self.tblKategorija" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblKorisnici" EntityType="Self.tblKorisnici" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblProizvod" EntityType="Self.tblProizvod" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblTransakcija" EntityType="Self.tblTransakcija" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblTransakcijaStavka" EntityType="Self.tblTransakcijaStavka" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_tblProizvod_tblKategorija" Association="Self.FK_tblProizvod_tblKategorija">
-            <End Role="tblKategorija" EntitySet="tblKategorija" />
-            <End Role="tblProizvod" EntitySet="tblProizvod" />
+          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProduct" EntityType="Self.tblProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransaction" EntityType="Self.tblTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransactionItem" EntityType="Self.tblTransactionItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblProduct_tblCategory" Association="Self.FK_tblProduct_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblProduct" EntitySet="tblProduct" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTransakcijaStavka_tblKorisnici" Association="Self.FK_tblTransakcijaStavka_tblKorisnici">
-            <End Role="tblKorisnici" EntitySet="tblKorisnici" />
-            <End Role="tblTransakcijaStavka" EntitySet="tblTransakcijaStavka" />
+          <AssociationSet Name="FK_tblTransactionItem_tblProduct" Association="Self.FK_tblTransactionItem_tblProduct">
+            <End Role="tblProduct" EntitySet="tblProduct" />
+            <End Role="tblTransactionItem" EntitySet="tblTransactionItem" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTransakcijaStavka_tblProizvod" Association="Self.FK_tblTransakcijaStavka_tblProizvod">
-            <End Role="tblProizvod" EntitySet="tblProizvod" />
-            <End Role="tblTransakcijaStavka" EntitySet="tblTransakcijaStavka" />
+          <AssociationSet Name="FK_tblTransactionItem_tblTransaction" Association="Self.FK_tblTransactionItem_tblTransaction">
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+            <End Role="tblTransactionItem" EntitySet="tblTransactionItem" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTransakcijaStavka_tblTransakcija" Association="Self.FK_tblTransakcijaStavka_tblTransakcija">
-            <End Role="tblTransakcija" EntitySet="tblTransakcija" />
-            <End Role="tblTransakcijaStavka" EntitySet="tblTransakcijaStavka" />
+          <AssociationSet Name="FK_tblTransactionItem_tblUsers" Association="Self.FK_tblTransactionItem_tblUsers">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblTransactionItem" EntitySet="tblTransactionItem" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -122,124 +126,128 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="tblKategorija">
+        <EntityType Name="tblCategory">
           <Key>
-            <PropertyRef Name="kategorijaId" />
+            <PropertyRef Name="categoryId" />
           </Key>
-          <Property Name="kategorijaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblProizvod" Relationship="Self.FK_tblProizvod_tblKategorija" FromRole="tblKategorija" ToRole="tblProizvod" />
+          <Property Name="categoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="categoryImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="tblProduct" Relationship="Self.FK_tblProduct_tblCategory" FromRole="tblCategory" ToRole="tblProduct" />
         </EntityType>
-        <EntityType Name="tblKorisnici">
+        <EntityType Name="tblProduct">
           <Key>
-            <PropertyRef Name="korisnikId" />
+            <PropertyRef Name="productId" />
           </Key>
-          <Property Name="korisnikId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="korisnickoIme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lozinka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tblTransakcijaStavka" Relationship="Self.FK_tblTransakcijaStavka_tblKorisnici" FromRole="tblKorisnici" ToRole="tblTransakcijaStavka" />
+          <Property Name="productId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="productPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="productImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="categoryId" Type="Int32" />
+          <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblProduct_tblCategory" FromRole="tblProduct" ToRole="tblCategory" />
+          <NavigationProperty Name="tblTransactionItem" Relationship="Self.FK_tblTransactionItem_tblProduct" FromRole="tblProduct" ToRole="tblTransactionItem" />
         </EntityType>
-        <EntityType Name="tblProizvod">
+        <EntityType Name="tblTransaction">
           <Key>
-            <PropertyRef Name="proizvodId" />
+            <PropertyRef Name="transactionId" />
           </Key>
-          <Property Name="proizvodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="cena" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="slika" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="kategorijaId" Type="Int32" />
-          <NavigationProperty Name="tblKategorija" Relationship="Self.FK_tblProizvod_tblKategorija" FromRole="tblProizvod" ToRole="tblKategorija" />
-          <NavigationProperty Name="tblTransakcijaStavka" Relationship="Self.FK_tblTransakcijaStavka_tblProizvod" FromRole="tblProizvod" ToRole="tblTransakcijaStavka" />
+          <Property Name="transactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="transactionDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblTransactionItem" Relationship="Self.FK_tblTransactionItem_tblTransaction" FromRole="tblTransaction" ToRole="tblTransactionItem" />
         </EntityType>
-        <EntityType Name="tblTransakcija">
+        <EntityType Name="tblTransactionItem">
           <Key>
-            <PropertyRef Name="transakcijaId" />
+            <PropertyRef Name="transactionItemId" />
           </Key>
-          <Property Name="transakcijaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="datumTransakcije" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblTransakcijaStavka" Relationship="Self.FK_tblTransakcijaStavka_tblTransakcija" FromRole="tblTransakcija" ToRole="tblTransakcijaStavka" />
+          <Property Name="transactionItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="transactionId" Type="Int32" />
+          <Property Name="productId" Type="Int32" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="tblProduct" Relationship="Self.FK_tblTransactionItem_tblProduct" FromRole="tblTransactionItem" ToRole="tblProduct" />
+          <NavigationProperty Name="tblTransaction" Relationship="Self.FK_tblTransactionItem_tblTransaction" FromRole="tblTransactionItem" ToRole="tblTransaction" />
+          <NavigationProperty Name="tblUsers" Relationship="Self.FK_tblTransactionItem_tblUsers" FromRole="tblTransactionItem" ToRole="tblUsers" />
         </EntityType>
-        <EntityType Name="tblTransakcijaStavka">
+        <EntityType Name="tblUsers">
           <Key>
-            <PropertyRef Name="transakcijaStavkaId" />
+            <PropertyRef Name="userId" />
           </Key>
-          <Property Name="transakcijaStavkaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="transakcijaId" Type="Int32" />
-          <Property Name="proizvodId" Type="Int32" />
-          <Property Name="korisnikId" Type="Int32" />
-          <NavigationProperty Name="tblKorisnici" Relationship="Self.FK_tblTransakcijaStavka_tblKorisnici" FromRole="tblTransakcijaStavka" ToRole="tblKorisnici" />
-          <NavigationProperty Name="tblProizvod" Relationship="Self.FK_tblTransakcijaStavka_tblProizvod" FromRole="tblTransakcijaStavka" ToRole="tblProizvod" />
-          <NavigationProperty Name="tblTransakcija" Relationship="Self.FK_tblTransakcijaStavka_tblTransakcija" FromRole="tblTransakcijaStavka" ToRole="tblTransakcija" />
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblTransactionItem" Relationship="Self.FK_tblTransactionItem_tblUsers" FromRole="tblUsers" ToRole="tblTransactionItem" />
         </EntityType>
-        <Association Name="FK_tblProizvod_tblKategorija">
-          <End Role="tblKategorija" Type="Self.tblKategorija" Multiplicity="0..1" />
-          <End Role="tblProizvod" Type="Self.tblProizvod" Multiplicity="*" />
+        <Association Name="FK_tblProduct_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblKategorija">
-              <PropertyRef Name="kategorijaId" />
+            <Principal Role="tblCategory">
+              <PropertyRef Name="categoryId" />
             </Principal>
-            <Dependent Role="tblProizvod">
-              <PropertyRef Name="kategorijaId" />
+            <Dependent Role="tblProduct">
+              <PropertyRef Name="categoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTransakcijaStavka_tblKorisnici">
-          <End Role="tblKorisnici" Type="Self.tblKorisnici" Multiplicity="0..1" />
-          <End Role="tblTransakcijaStavka" Type="Self.tblTransakcijaStavka" Multiplicity="*" />
+        <Association Name="FK_tblTransactionItem_tblProduct">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="0..1" />
+          <End Role="tblTransactionItem" Type="Self.tblTransactionItem" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblKorisnici">
-              <PropertyRef Name="korisnikId" />
+            <Principal Role="tblProduct">
+              <PropertyRef Name="productId" />
             </Principal>
-            <Dependent Role="tblTransakcijaStavka">
-              <PropertyRef Name="korisnikId" />
+            <Dependent Role="tblTransactionItem">
+              <PropertyRef Name="productId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTransakcijaStavka_tblProizvod">
-          <End Role="tblProizvod" Type="Self.tblProizvod" Multiplicity="0..1" />
-          <End Role="tblTransakcijaStavka" Type="Self.tblTransakcijaStavka" Multiplicity="*" />
+        <Association Name="FK_tblTransactionItem_tblTransaction">
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="0..1" />
+          <End Role="tblTransactionItem" Type="Self.tblTransactionItem" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblProizvod">
-              <PropertyRef Name="proizvodId" />
+            <Principal Role="tblTransaction">
+              <PropertyRef Name="transactionId" />
             </Principal>
-            <Dependent Role="tblTransakcijaStavka">
-              <PropertyRef Name="proizvodId" />
+            <Dependent Role="tblTransactionItem">
+              <PropertyRef Name="transactionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTransakcijaStavka_tblTransakcija">
-          <End Role="tblTransakcija" Type="Self.tblTransakcija" Multiplicity="0..1" />
-          <End Role="tblTransakcijaStavka" Type="Self.tblTransakcijaStavka" Multiplicity="*" />
+        <Association Name="FK_tblTransactionItem_tblUsers">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblTransactionItem" Type="Self.tblTransactionItem" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblTransakcija">
-              <PropertyRef Name="transakcijaId" />
+            <Principal Role="tblUsers">
+              <PropertyRef Name="userId" />
             </Principal>
-            <Dependent Role="tblTransakcijaStavka">
-              <PropertyRef Name="transakcijaId" />
+            <Dependent Role="tblTransactionItem">
+              <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tblKategorija" EntityType="Self.tblKategorija" />
-          <EntitySet Name="tblKorisnici" EntityType="Self.tblKorisnici" />
-          <EntitySet Name="tblProizvod" EntityType="Self.tblProizvod" />
-          <EntitySet Name="tblTransakcija" EntityType="Self.tblTransakcija" />
-          <EntitySet Name="tblTransakcijaStavka" EntityType="Self.tblTransakcijaStavka" />
-          <AssociationSet Name="FK_tblProizvod_tblKategorija" Association="Self.FK_tblProizvod_tblKategorija">
-            <End Role="tblKategorija" EntitySet="tblKategorija" />
-            <End Role="tblProizvod" EntitySet="tblProizvod" />
+          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" />
+          <EntitySet Name="tblProduct" EntityType="Self.tblProduct" />
+          <EntitySet Name="tblTransaction" EntityType="Self.tblTransaction" />
+          <EntitySet Name="tblTransactionItem" EntityType="Self.tblTransactionItem" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" />
+          <AssociationSet Name="FK_tblProduct_tblCategory" Association="Self.FK_tblProduct_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblProduct" EntitySet="tblProduct" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTransakcijaStavka_tblKorisnici" Association="Self.FK_tblTransakcijaStavka_tblKorisnici">
-            <End Role="tblKorisnici" EntitySet="tblKorisnici" />
-            <End Role="tblTransakcijaStavka" EntitySet="tblTransakcijaStavka" />
+          <AssociationSet Name="FK_tblTransactionItem_tblProduct" Association="Self.FK_tblTransactionItem_tblProduct">
+            <End Role="tblProduct" EntitySet="tblProduct" />
+            <End Role="tblTransactionItem" EntitySet="tblTransactionItem" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTransakcijaStavka_tblProizvod" Association="Self.FK_tblTransakcijaStavka_tblProizvod">
-            <End Role="tblProizvod" EntitySet="tblProizvod" />
-            <End Role="tblTransakcijaStavka" EntitySet="tblTransakcijaStavka" />
+          <AssociationSet Name="FK_tblTransactionItem_tblTransaction" Association="Self.FK_tblTransactionItem_tblTransaction">
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+            <End Role="tblTransactionItem" EntitySet="tblTransactionItem" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTransakcijaStavka_tblTransakcija" Association="Self.FK_tblTransakcijaStavka_tblTransakcija">
-            <End Role="tblTransakcija" EntitySet="tblTransakcija" />
-            <End Role="tblTransakcijaStavka" EntitySet="tblTransakcijaStavka" />
+          <AssociationSet Name="FK_tblTransactionItem_tblUsers" Association="Self.FK_tblTransactionItem_tblUsers">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblTransactionItem" EntitySet="tblTransactionItem" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -248,49 +256,53 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
-          <EntitySetMapping Name="tblKategorija">
-            <EntityTypeMapping TypeName="Database1Model.tblKategorija">
-              <MappingFragment StoreEntitySet="tblKategorija">
-                <ScalarProperty Name="kategorijaId" ColumnName="kategorijaId" />
-                <ScalarProperty Name="naziv" ColumnName="naziv" />
+          <EntitySetMapping Name="tblCategory">
+            <EntityTypeMapping TypeName="Database1Model.tblCategory">
+              <MappingFragment StoreEntitySet="tblCategory">
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="categoryImage" ColumnName="categoryImage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblKorisnici">
-            <EntityTypeMapping TypeName="Database1Model.tblKorisnici">
-              <MappingFragment StoreEntitySet="tblKorisnici">
-                <ScalarProperty Name="korisnikId" ColumnName="korisnikId" />
-                <ScalarProperty Name="korisnickoIme" ColumnName="korisnickoIme" />
-                <ScalarProperty Name="lozinka" ColumnName="lozinka" />
+          <EntitySetMapping Name="tblProduct">
+            <EntityTypeMapping TypeName="Database1Model.tblProduct">
+              <MappingFragment StoreEntitySet="tblProduct">
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+                <ScalarProperty Name="productImage" ColumnName="productImage" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblProizvod">
-            <EntityTypeMapping TypeName="Database1Model.tblProizvod">
-              <MappingFragment StoreEntitySet="tblProizvod">
-                <ScalarProperty Name="proizvodId" ColumnName="proizvodId" />
-                <ScalarProperty Name="naziv" ColumnName="naziv" />
-                <ScalarProperty Name="cena" ColumnName="cena" />
-                <ScalarProperty Name="slika" ColumnName="slika" />
-                <ScalarProperty Name="kategorijaId" ColumnName="kategorijaId" />
+          <EntitySetMapping Name="tblTransaction">
+            <EntityTypeMapping TypeName="Database1Model.tblTransaction">
+              <MappingFragment StoreEntitySet="tblTransaction">
+                <ScalarProperty Name="transactionId" ColumnName="transactionId" />
+                <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTransakcija">
-            <EntityTypeMapping TypeName="Database1Model.tblTransakcija">
-              <MappingFragment StoreEntitySet="tblTransakcija">
-                <ScalarProperty Name="transakcijaId" ColumnName="transakcijaId" />
-                <ScalarProperty Name="datumTransakcije" ColumnName="datumTransakcije" />
+          <EntitySetMapping Name="tblTransactionItem">
+            <EntityTypeMapping TypeName="Database1Model.tblTransactionItem">
+              <MappingFragment StoreEntitySet="tblTransactionItem">
+                <ScalarProperty Name="transactionItemId" ColumnName="transactionItemId" />
+                <ScalarProperty Name="transactionId" ColumnName="transactionId" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTransakcijaStavka">
-            <EntityTypeMapping TypeName="Database1Model.tblTransakcijaStavka">
-              <MappingFragment StoreEntitySet="tblTransakcijaStavka">
-                <ScalarProperty Name="transakcijaStavkaId" ColumnName="transakcijaStavkaId" />
-                <ScalarProperty Name="transakcijaId" ColumnName="transakcijaId" />
-                <ScalarProperty Name="proizvodId" ColumnName="proizvodId" />
-                <ScalarProperty Name="korisnikId" ColumnName="korisnikId" />
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="Database1Model.tblUsers">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="email" ColumnName="email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

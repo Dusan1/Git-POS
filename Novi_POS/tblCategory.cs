@@ -7,21 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Novi_POS
+namespace NewPOS
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTransakcija
+    public partial class tblCategory
     {
-        public tblTransakcija()
+        public tblCategory()
         {
-            this.tblTransakcijaStavka = new HashSet<tblTransakcijaStavka>();
+            this.tblProduct = new HashSet<tblProduct>();
         }
     
-        public int transakcijaId { get; set; }
-        public Nullable<System.DateTime> datumTransakcije { get; set; }
+        public int categoryId { get; set; }
+        public string CategoryName { get; set; }
+        public byte[] categoryImage { get; set; }
     
-        public virtual ICollection<tblTransakcijaStavka> tblTransakcijaStavka { get; set; }
+        public virtual ICollection<tblProduct> tblProduct { get; set; }
     }
 }

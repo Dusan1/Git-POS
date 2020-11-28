@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Novi_POS
+namespace NewPOS
 {
     using System;
     using System.Data.Entity;
@@ -25,10 +25,10 @@ namespace Novi_POS
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblKategorija> tblKategorija { get; set; }
-        public virtual DbSet<tblKorisnici> tblKorisnici { get; set; }
-        public virtual DbSet<tblProizvod> tblProizvod { get; set; }
-        public virtual DbSet<tblTransakcija> tblTransakcija { get; set; }
-        public virtual DbSet<tblTransakcijaStavka> tblTransakcijaStavka { get; set; }
+        public virtual DbSet<tblCategory> tblCategory { get; set; }
+        public virtual DbSet<tblProduct> tblProduct { get; set; }
+        public virtual DbSet<tblTransaction> tblTransaction { get; set; }
+        public virtual DbSet<tblTransactionItem> tblTransactionItem { get; set; }
+        public virtual DbSet<tblUsers> tblUsers { get; set; }
     }
 }

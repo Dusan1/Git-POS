@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Novi_POS
+namespace NewPOS
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Novi_POS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SadrzajForma());
+            Application.Run(new LoginForm());
         }
     }
 }

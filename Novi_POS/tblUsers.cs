@@ -7,22 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Novi_POS
+namespace NewPOS
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class tblKorisnici
+    public partial class tblUsers
     {
-        public tblKorisnici()
+        public tblUsers()
         {
-            this.tblTransakcijaStavka = new HashSet<tblTransakcijaStavka>();
+            this.tblTransactionItem = new HashSet<tblTransactionItem>();
         }
     
-        public int korisnikId { get; set; }
-        public string korisnickoIme { get; set; }
-        public string lozinka { get; set; }
+        public int userId { get; set; }
+        public string userName { get; set; }
+        public string password { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string email { get; set; }
     
-        public virtual ICollection<tblTransakcijaStavka> tblTransakcijaStavka { get; set; }
+        public virtual ICollection<tblTransactionItem> tblTransactionItem { get; set; }
     }
 }
